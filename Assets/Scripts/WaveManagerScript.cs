@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+public enum EnemyMoveDir { RIGHT, LEFT, DOWN };
+
 public class WaveManagerScript : MonoBehaviour
 {
     [SerializeField] GameObject enemyPrefab;
@@ -10,6 +12,9 @@ public class WaveManagerScript : MonoBehaviour
     [SerializeField] Vector2 waveAnchor;
     [SerializeField] Vector2 waveSize;
     [SerializeField] Vector2 enemyOffset;
+    [SerializeField] float stepCooldown;
+    [SerializeField] float stepRange;
+    EnemyMoveDir moveDir = EnemyMoveDir.RIGHT;
 
     [SerializeField] float enemyShootCooldown;
     bool isShootCooldown = false;
@@ -24,7 +29,6 @@ public class WaveManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(enemyList.Count);
         if (enemyList.Count == 0) { 
             NextWave();
         }
@@ -81,4 +85,47 @@ public class WaveManagerScript : MonoBehaviour
         return lowestEnemies;
     }
 
+    List<KeyValuePair<Vector2, GameObject>> GetMostRightEnemies()
+    {
+        List<KeyValuePair<Vector2, GameObject>> rightEnemies = new List<KeyValuePair<Vector2, GameObject>>();
+        int highestRow = -1;
+        foreach (KeyValuePair<Vector2, GameObject> enemy in enemyList)
+        {
+            if (enemy.Key.y > highestRow)
+            {
+                rightEnemies.Clear();
+                rightEnemies.Add(enemy);
+                highestRow = (int)enemy.Key.x;
+            }
+            else if (enemy.Key.x == highestRow)
+            {
+                rightEnemies.Add(enemy);
+            }
+        }
+        return rightEnemies;
+    }
+
+    bool isNextStepPossible() {
+
+        switch (moveDir) {
+            case EnemyMoveDir.RIGHT:
+
+            break;
+
+            case EnemyMoveDir.LEFT:
+            break;
+
+            case EnemyMoveDir.DOWN:
+
+            break;
+        }
+
+        return true;
+    }
+
+    IEnumerator NextEnemyStep()
+    {
+
+        yield return new WaitForSeconds(stepCooldown);
+    }
 }
