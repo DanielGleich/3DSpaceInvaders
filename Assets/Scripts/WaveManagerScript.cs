@@ -59,7 +59,6 @@ public class WaveManagerScript : MonoBehaviour
         if (lowestEnemies.Count > 0) {
             int randomInt = ((int)Random.Range(0, lowestEnemies.Count));
             lowestEnemies[randomInt].Value.GetComponent<EnemyScript>().Shoot();
-            Debug.Log(lowestEnemies.Count);
         }
         isShootCooldown = false;
 
