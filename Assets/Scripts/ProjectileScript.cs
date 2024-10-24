@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 
 public enum DIR { UP, DOWN };
@@ -36,12 +37,17 @@ public class ProjectileScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Shield")) { 
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
         else if (dir == DIR.UP && other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             other.gameObject.GetComponent<EnemyScript>().Die();
             Destroy(gameObject);
         }
-        else if (dir == DIR.DOWN && other.gameObject.tag == "Player") { 
+        else if (dir == DIR.DOWN && other.gameObject.tag == "Player")
+        {
             //Lose
             Destroy(gameObject);
         }
