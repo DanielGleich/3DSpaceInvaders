@@ -489,14 +489,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfb9468c17f93bb4dbbb2e9915d13f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugPlayField: 1
+  debugSteps: 1
+  debugMat: {fileID: 2100000, guid: a1ab5ee1beec41349bda19852ad4070d, type: 2}
+  playField:
+    serializedVersion: 2
+    x: -7.78
+    y: 4.85
+    width: 15.5
+    height: 7.5
   enemyPrefab: {fileID: 5218198613321199938, guid: f670eb9d0f5fda34bb9ca9e25b234bc7,
     type: 3}
   waveAnchor: {x: -7.78, y: 4.85}
   waveSize: {x: 11, y: 5}
   enemyOffset: {x: 0.5, y: 0.5}
-  stepCooldown: 0
-  stepRange: 0
-  enemyShootCooldown: 2
+  stepCooldown: 1.5
+  stepRange: 0.5
+  enemyShootCooldown: 1.4
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

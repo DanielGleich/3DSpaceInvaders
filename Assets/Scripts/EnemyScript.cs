@@ -6,6 +6,7 @@ public class EnemyScript : MonoBehaviour
 {
     [SerializeField] GameObject projectile;
     [SerializeField] Vector3 projectileOffset;
+    public Vector2 id;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -19,12 +20,13 @@ public class EnemyScript : MonoBehaviour
         
     }
 
-    public void Die() { 
+    public void Die() {
+        WaveManagerScript.enemyList.Remove(id);
         Destroy(gameObject);
     }
 
     public void MoveStep(Vector3 pos) { 
-        transform.position = pos;
+        transform.position = transform.position + pos;
     }
 
     public void Shoot() {
