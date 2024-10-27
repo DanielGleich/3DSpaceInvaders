@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
@@ -30,7 +28,14 @@ public class EnemyScript : MonoBehaviour
     }
 
     public void Shoot() {
-        Instantiate(projectile, rb.transform.position + projectileOffset, Quaternion.identity);
+        Instantiate(projectile, rb.transform.position + projectileOffset, projectile.transform.rotation);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Shield")) { 
+            Destroy(collision.gameObject);
+        }
     }
 
 }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 
 public enum DIR { UP, DOWN };
@@ -10,6 +7,7 @@ public class ProjectileScript : MonoBehaviour
     Vector3 moveDir;
     [SerializeField] float speed;
     Rigidbody rb;
+    bool hasCollided = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +31,16 @@ public class ProjectileScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (hasCollided) // Make sure that Projectile only destroys a single shield block
+        {
+            return;
+        }
         if (other.gameObject.layer == LayerMask.NameToLayer("Border"))
         {
             Destroy(gameObject);
         }
-        else if (other.gameObject.layer == LayerMask.NameToLayer("Shield")) { 
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Shield")) {
+            hasCollided = true;
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
@@ -46,9 +49,9 @@ public class ProjectileScript : MonoBehaviour
             other.gameObject.GetComponent<EnemyScript>().Die();
             Destroy(gameObject);
         }
-        else if (dir == DIR.DOWN && other.gameObject.tag == "Player")
+        else if (dir == DIR.DOWN && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            //Lose
+            GameManagerScript.GetInstance().HitPlayer();
             Destroy(gameObject);
         }
     }

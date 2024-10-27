@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1433736940867018547}
   - component: {fileID: 321863134200330254}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 5265485396703220058}
   - component: {fileID: 5902220630224871261}
   - component: {fileID: 998757111397746413}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,11 +222,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24a5fdd6d57b6347bc1b43cdf2a91e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
-  maxVel: 0
+  moveSpeed: 2000
+  maxVel: 5
   shootCooldown: 1
   isWaitingForShoot: 0
   projectilePrefab: {fileID: 4870906683517044708, guid: 2e9b7b86992b21f43bc4cb6683f184a2,
     type: 3}
   projectilePositionOffset: {x: 0, y: 0, z: 0}
+  normalMat: {fileID: 2100000, guid: 6da3d9a1e8d73f14bb196e10ebfb2d96, type: 2}
+  hitMat: {fileID: 2100000, guid: b2a5ec29488098540b2110be5badefd0, type: 2}
   animator: {fileID: 321863134200330254}

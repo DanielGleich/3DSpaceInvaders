@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public enum EnemyMoveDir { RIGHT, LEFT, DOWN };
@@ -18,6 +17,10 @@ public class WaveManagerScript : MonoBehaviour
     [SerializeField] Vector2 enemyOffset;
     [SerializeField] float stepCooldown;
     [SerializeField] float stepRange;
+
+    [SerializeField] float gameOverHeight;
+
+    GameManagerScript gameManager;
     bool isStepinProgress = false;
 
     EnemyMoveDir currentMoveDir = EnemyMoveDir.RIGHT;
@@ -30,6 +33,7 @@ public class WaveManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManagerScript.GetInstance();
     }
 
     void DebugPlayField() {
@@ -56,7 +60,7 @@ public class WaveManagerScript : MonoBehaviour
             NextWave();
         }
 
-        if (!isStepinProgress)
+        if (!isStepinProgress && !gameManager.GetIsPaused())
             StartCoroutine(NextEnemyStep());
 
         if (!isShootCooldown)
@@ -84,12 +88,11 @@ public class WaveManagerScript : MonoBehaviour
         yield return new WaitForSeconds(enemyShootCooldown);
 
         List<KeyValuePair<Vector2, GameObject>> lowestEnemies = GetLowestEnemies();
-        if (lowestEnemies.Count > 0) {
+        if (lowestEnemies.Count > 0 && !gameManager.GetIsPaused()) {
             int randomInt = ((int)Random.Range(0, lowestEnemies.Count));
             lowestEnemies[randomInt].Value.GetComponent<EnemyScript>().Shoot();
         }
         isShootCooldown = false;
-
     }
 
     List<KeyValuePair<Vector2, GameObject>> GetLowestEnemies()
@@ -213,12 +216,21 @@ public class WaveManagerScript : MonoBehaviour
 
         for (int y = (int)waveSize.y - 1; y >= 0; y--)
         {
+            while (gameManager.GetIsPaused()) {
+                Debug.Log("Stepwait");
+                yield return new WaitForSeconds(.1f);
+            }
             yield return new WaitForSeconds(stepCooldown);
             for (int x = 0; x < waveSize.x; x++)
             {
                 if (enemyList.ContainsKey(new Vector2(x, y)))
                 {
                     enemyList[new Vector2(x, y)].GetComponent<EnemyScript>().MoveStep(step);
+                    if (enemyList[new Vector2(x, y)].transform.position.y <= gameOverHeight)
+                    {
+                        gameManager.GameOver();
+                        break;
+                    }
                 }
             }
         }

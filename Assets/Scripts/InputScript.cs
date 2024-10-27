@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputScript : MonoBehaviour
@@ -13,7 +12,13 @@ public class InputScript : MonoBehaviour
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Vector3 projectilePositionOffset;
 
+    [SerializeField] Material normalMat;
+    [SerializeField] Material hitMat;
+
     Rigidbody rb;
+    MeshRenderer mr;
+    GameManagerScript gameManager;
+
     [SerializeField] Animator animator;
 
 
@@ -21,11 +26,24 @@ public class InputScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        mr = GetComponent<MeshRenderer>();
+        gameManager = GameManagerScript.GetInstance();
+    }
+
+    void SetMat() { 
+        mr.material = (gameManager.GetIsPaused() ? hitMat : normalMat);
     }
 
     // Update is called once per frame
     void Update()
     {
+        SetMat();
+        if (!gameManager.GetIsPaused())
+            ProcessInputs();
+        else rb.velocity = Vector3.zero;
+    }
+
+    void ProcessInputs() {
         if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(new Vector3(-moveSpeed, 0, 0) * Time.deltaTime);
@@ -46,21 +64,18 @@ public class InputScript : MonoBehaviour
                 animator.SetBool("MovingRight", true);
             }
         }
-        else { 
-                rb.velocity = Vector3.SmoothDamp(rb.velocity, new Vector3(0, rb.velocity.y, 0), ref velStandByRef, .1f);
+        else
+        {
+            rb.velocity = Vector3.SmoothDamp(rb.velocity, new Vector3(0, rb.velocity.y, 0), ref velStandByRef, .1f);
             animator.SetBool("MovingLeft", false);
             animator.SetBool("MovingRight", false);
         }
-
-        
-        
-        
 
         ScreenWrapping();
 
         if (Input.GetKeyDown(KeyCode.Space) && !isWaitingForShoot)
         {
-           StartCoroutine(ShootProjectile());
+            StartCoroutine(ShootProjectile());
         }
     }
 
@@ -83,7 +98,7 @@ public class InputScript : MonoBehaviour
 
     IEnumerator ShootProjectile() {
         isWaitingForShoot = true;
-        Instantiate(projectilePrefab, rb.transform.position + projectilePositionOffset, Quaternion.identity);
+        Instantiate(projectilePrefab, rb.transform.position + projectilePositionOffset, projectilePrefab.transform.rotation);
         yield return new WaitForSeconds(shootCooldown);
         isWaitingForShoot = false;
     }
