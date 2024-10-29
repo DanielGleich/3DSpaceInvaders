@@ -7403,9 +7403,44 @@ PrefabInstance:
       objectReference: {fileID: 264044400}
     - target: {fileID: 4642889854583231582, guid: 284f6d59d35ff464abfaf3a5506e7ca7,
         type: 3}
+      propertyPath: gameOverlay
+      value: 
+      objectReference: {fileID: 264977966}
+    - target: {fileID: 4642889854583231582, guid: 284f6d59d35ff464abfaf3a5506e7ca7,
+        type: 3}
       propertyPath: gameOverScreen
       value: 
       objectReference: {fileID: 175559699}
+    - target: {fileID: 4642889854583231582, guid: 284f6d59d35ff464abfaf3a5506e7ca7,
+        type: 3}
+      propertyPath: gameOverScoreText
+      value: 
+      objectReference: {fileID: 264044400}
+    - target: {fileID: 4642889854583231582, guid: 284f6d59d35ff464abfaf3a5506e7ca7,
+        type: 3}
+      propertyPath: gameplayScoreText
+      value: 
+      objectReference: {fileID: 1169859280}
+    - target: {fileID: 4642889854583231582, guid: 284f6d59d35ff464abfaf3a5506e7ca7,
+        type: 3}
+      propertyPath: uiHearts.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4642889854583231582, guid: 284f6d59d35ff464abfaf3a5506e7ca7,
+        type: 3}
+      propertyPath: uiHearts.Array.data[0]
+      value: 
+      objectReference: {fileID: 2112100337}
+    - target: {fileID: 4642889854583231582, guid: 284f6d59d35ff464abfaf3a5506e7ca7,
+        type: 3}
+      propertyPath: uiHearts.Array.data[1]
+      value: 
+      objectReference: {fileID: 279756658}
+    - target: {fileID: 4642889854583231582, guid: 284f6d59d35ff464abfaf3a5506e7ca7,
+        type: 3}
+      propertyPath: uiHearts.Array.data[2]
+      value: 
+      objectReference: {fileID: 1295871428}
     - target: {fileID: 6252667111279724451, guid: 284f6d59d35ff464abfaf3a5506e7ca7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7522,6 +7557,16 @@ PrefabInstance:
     - target: {fileID: 2651867462816425767, guid: 55b6410780e0019499e9273ff9944baf,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4591644552905112535, guid: 55b6410780e0019499e9273ff9944baf,
+        type: 3}
+      propertyPath: debugSteps
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4591644552905112535, guid: 55b6410780e0019499e9273ff9944baf,
+        type: 3}
+      propertyPath: debugPlayField
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4591644552905112535, guid: 55b6410780e0019499e9273ff9944baf,

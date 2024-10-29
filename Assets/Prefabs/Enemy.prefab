@@ -122,6 +122,9 @@ MonoBehaviour:
   projectile: {fileID: 7347088594170576567, guid: f75d88ec4e055814588a652fff278482,
     type: 3}
   projectileOffset: {x: 0, y: -0.2, z: 0}
+  pointValue: 200
+  explosionPrefab: {fileID: 5829549894569608384, guid: da27a5b7837450e4690b847a437140e2,
+    type: 3}
   id: {x: 0, y: 0}
 --- !u!54 &-6452605154922343959
 Rigidbody:

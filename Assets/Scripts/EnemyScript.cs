@@ -4,6 +4,8 @@ public class EnemyScript : MonoBehaviour
 {
     [SerializeField] GameObject projectile;
     [SerializeField] Vector3 projectileOffset;
+    [SerializeField] int pointValue;
+    [SerializeField] GameObject explosionPrefab;
     public Vector2 id;
     Rigidbody rb;
     // Start is called before the first frame update
@@ -20,6 +22,8 @@ public class EnemyScript : MonoBehaviour
 
     public void Die() {
         WaveManagerScript.enemyList.Remove(id);
+        GameManagerScript.GetInstance().AddPoints(pointValue);
+        Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

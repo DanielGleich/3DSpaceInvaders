@@ -217,7 +217,6 @@ public class WaveManagerScript : MonoBehaviour
         for (int y = (int)waveSize.y - 1; y >= 0; y--)
         {
             while (gameManager.GetIsPaused()) {
-                Debug.Log("Stepwait");
                 yield return new WaitForSeconds(.1f);
             }
             yield return new WaitForSeconds(stepCooldown);
@@ -235,5 +234,11 @@ public class WaveManagerScript : MonoBehaviour
             }
         }
         isStepinProgress = false;
+    }
+
+    private void OnDestroy()
+    {
+        enemyList.Clear();
+        StopAllCoroutines();
     }
 }

@@ -1,17 +1,38 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
+
+    #region Singleton
+    private void Awake()
+    {
+        if (instance != null) Destroy(gameObject);
+        else instance = this;
+    }
+
+    #endregion
+
     static GameManagerScript instance;
+
+    private void OnDestroy()
+    {
+        instance = null;
+    }
+
 
     [SerializeField] static int playerTries = 3;
     [SerializeField] float pauseTime;
     [SerializeField] bool isPaused = false;
+    [SerializeField] List<Image> uiHearts = new List<Image>();
     [SerializeField] GameObject gameOverScreen;
-    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] GameObject gameOverlay;
+    [SerializeField] TextMeshProUGUI gameOverScoreText;
+    [SerializeField] TextMeshProUGUI gameplayScoreText;
     [SerializeField] int playerScore = 0;
 
     public static GameManagerScript GetInstance() {  return instance; }
@@ -24,6 +45,8 @@ public class GameManagerScript : MonoBehaviour
     {
         GameManagerScript.playerTries = playerTries;
     }
+
+    public void AddPoints(int points) { playerScore += points; }
 
     public bool GetIsPaused() { return isPaused; }
     public void HitPlayer() {
@@ -41,8 +64,9 @@ public class GameManagerScript : MonoBehaviour
     }
 
     public void GameOver() {
-        scoreText.text = "Score: " + playerScore;
+        gameOverScoreText.text = "Score: " + playerScore;
         gameOverScreen.SetActive(true);
+        gameOverlay.SetActive(false);
     }
 
     public void Restart() {
@@ -52,16 +76,18 @@ public class GameManagerScript : MonoBehaviour
     public void MainMenu() {
         SceneManager.LoadScene(0);
     } 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Update()
     {
-        if (instance != null) Destroy(gameObject);
-        else instance = this;
+        UpdateUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    void UpdateUI()
     {
-        
+        for (int i = 0; i < uiHearts.Count; i++)
+        {
+            uiHearts[i].gameObject.SetActive(i < playerTries);
+        }
+        gameplayScoreText.text = playerScore.ToString();
     }
 }

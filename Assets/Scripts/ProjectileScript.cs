@@ -51,6 +51,7 @@ public class ProjectileScript : MonoBehaviour
         }
         else if (dir == DIR.DOWN && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
+            hasCollided = true;
             GameManagerScript.GetInstance().HitPlayer();
             Destroy(gameObject);
         }
